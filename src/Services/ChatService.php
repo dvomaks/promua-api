@@ -51,7 +51,7 @@ class ChatService
         // TODO:For file upload, we need to use a different approach
         // This would typically require the client to handle multipart form data
         $data['file'] = new \CurlFile($filePath);
-        $response = $this->client->post('/chat/send_file', $data, ['Content-Type' => 'multipart/form-data']);
+        $response = $this->client->post('/chat/send_file', $data);
         return $response;
     }
 

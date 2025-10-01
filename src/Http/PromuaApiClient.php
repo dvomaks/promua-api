@@ -36,7 +36,7 @@ class PromuaApiClient
         return $this->handleResponse($response);
     }
 
-    public function post(string $endpoint, array $data = []): array
+    public function post(string $endpoint, array $data = [], array $headers = []): array
     {
         $response = $this->client->post($endpoint, $data);
 

@@ -3,7 +3,12 @@
 use Dvomaks\PromuaApi\Services\OrdersService;
 use Dvomaks\PromuaApi\Http\PromuaApiClient;
 use Dvomaks\PromuaApi\Dto\OrderDto;
+use Mockery;
 
+/**
+ * @property PromuaApiClient $mockClient
+ * @property OrdersService $service
+ */
 it('can get order list', function () {
     $mockClient = Mockery::mock(PromuaApiClient::class);
     $mockClient->shouldReceive('get')

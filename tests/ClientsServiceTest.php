@@ -4,6 +4,10 @@ use Dvomaks\PromuaApi\Http\PromuaApiClient;
 use Dvomaks\PromuaApi\Services\ClientsService;
 use Dvomaks\PromuaApi\Dto\ClientDto;
 
+/**
+ * @property PromuaApiClient $mockClient
+ * @property ClientsService $clientsService
+ */
 beforeEach(function () {
     $this->mockClient = Mockery::mock(PromuaApiClient::class);
     $this->clientsService = new ClientsService($this->mockClient);

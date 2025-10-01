@@ -6,6 +6,10 @@ use Dvomaks\PromuaApi\Http\PromuaApiClient;
 use Dvomaks\PromuaApi\Services\ChatService;
 use Mockery as m;
 
+/**
+ * @property PromuaApiClient $client
+ * @property ChatService $service
+ */
 beforeEach(function () {
     $this->client = m::mock(PromuaApiClient::class);
     $this->service = new ChatService($this->client);
