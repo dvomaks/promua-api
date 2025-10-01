@@ -3,6 +3,7 @@
 [![PHP Version](https://img.shields.io/badge/php-8.2+-blue.svg)](https://php.net/)
 [![Laravel Version](https://img.shields.io/badge/laravel-11.0+-red.svg)](https://laravel.com/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://opensource.org/licenses/MIT)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/dvomaks/promua-api/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/dvomaks/promua-api/tree/main)
 
 > Потужний Laravel пакет для інтеграції з PromUA API - провідною українською e-commerce платформою
 
