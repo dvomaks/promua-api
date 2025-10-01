@@ -19,4 +19,17 @@ return [
     'timeout' => env('PROMUA_TIMEOUT', 30),
 
     'language' => env('PROMUA_LANGUAGE', 'uk'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Logging Configuration
+    |--------------------------------------------------------------------------
+    |
+    | Configure if API requests and responses should be logged.
+    |
+    */
+
+    'logging' => [
+        'enabled' => env('PROMUA_LOGGING_ENABLED', false),
+    ],
 ];

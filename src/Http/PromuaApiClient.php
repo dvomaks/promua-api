@@ -6,6 +6,7 @@ use Dvomaks\PromuaApi\Exceptions\PromuaApiException;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class PromuaApiClient
 {
@@ -13,6 +14,8 @@ class PromuaApiClient
 
     public function __construct()
     {
+        $loggingEnabled = Config::get('promua-api.logging.enabled', false);
+
         $this->client = Http::withHeaders([
             'Authorization' => 'Bearer '.Config::get('promua-api.api_token'),
             'Accept' => 'application/json',
@@ -22,6 +25,17 @@ class PromuaApiClient
             ->withUserAgent('Dvomaks/PromuaApi')
             ->timeout(Config::get('promua-api.timeout'))
             ->baseUrl(Config::get('promua-api.base_url'));
+
+        if ($loggingEnabled) {
+            $this->client = $this->client->beforeSending(function ($request, $options) {
+                Log::info('PromUA API Request', [
+                    'method' => $request->method(),
+                    'url' => $request->url(),
+                    'headers' => $request->headers(),
+                    'body' => $request->body(),
+                ]);
+            });
+        }
     }
 
     public function getClient(): PendingRequest
@@ -59,6 +73,16 @@ class PromuaApiClient
 
     protected function handleResponse($response): array
     {
+        $loggingEnabled = Config::get('promua-api.logging.enabled', false);
+
+        if ($loggingEnabled) {
+            Log::info('PromUA API Response', [
+                'status' => $response->status(),
+                'headers' => $response->headers(),
+                'body' => $response->body(),
+            ]);
+        }
+
         if (! $response->successful()) {
             throw new PromuaApiException(
                 'API request failed: '.$response->body(),
