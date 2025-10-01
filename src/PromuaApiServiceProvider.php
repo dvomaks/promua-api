@@ -1,5 +1,5 @@
 <?php
- 
+
 namespace Dvomaks\PromuaApi;
 
 use Spatie\LaravelPackageTools\Package;

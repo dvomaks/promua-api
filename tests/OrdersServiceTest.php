@@ -3,7 +3,6 @@
 use Dvomaks\PromuaApi\Dto\OrderDto;
 use Dvomaks\PromuaApi\Http\PromuaApiClient;
 use Dvomaks\PromuaApi\Services\OrdersService;
-use Mockery;
 
 /**
  * @property PromuaApiClient $mockClient
