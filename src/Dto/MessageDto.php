@@ -6,35 +6,29 @@ namespace Dvomaks\PromuaApi\Dto;
  * DTO для повідомлення в системі PromUA
  *
  * Цей клас використовується для представлення даних повідомлення з API PromUA.
- * Містить інформацію про ідентифікатор повідомлення, кімнату, відправника, дату створення та інші властивості, вказані в документації API.
+ * Містить інформацію про ідентифікатор повідомлення, дату створення, ім'я клієнта, телефон, текст повідомлення, тему, статус та ідентифікатор товару.
  */
 class MessageDto
 {
     /**
      * @param int $id Унікальний ідентифікатор повідомлення
-     * @param int|null $room_id Ідентифікатор кімнати
-     * @param string|null $room_name Назва кімнати
-     * @param string|null $message Текст повідомлення
      * @param string|null $date_created Дата створення повідомлення в форматі ISO-8601
-     * @param string|null $date_read Дата прочитання повідомлення в форматі ISO-8601
-     * @param string|null $sender_type Тип відправника
-     * @param array|null $sender Відправник
-     * @param array|null $product Продукт, пов'язаний з повідомленням
-     * @param array|null $order Замовлення, пов'язане з повідомленням
-     * @param string|null $status Статус повідомлення
+     * @param string|null $client_full_name ПІБ клієнта
+     * @param string|null $phone Телефон клієнта
+     * @param string|null $message Текст повідомлення
+     * @param string|null $subject Тема повідомлення
+     * @param string|null $status Статус повідомлення (unread, read, deleted)
+     * @param int|null $product_id Унікальний ідентифікатор товара
      */
     public function __construct(
         public int $id,
-        public ?int $room_id,
-        public ?string $room_name,
-        public ?string $message,
         public ?string $date_created,
-        public ?string $date_read,
-        public ?string $sender_type,
-        public ?array $sender,
-        public ?array $product,
-        public ?array $order,
+        public ?string $client_full_name,
+        public ?string $phone,
+        public ?string $message,
+        public ?string $subject,
         public ?string $status,
+        public ?int $product_id,
     ) {
     }
 
@@ -48,16 +42,13 @@ class MessageDto
     {
         return new self(
             id: $data['id'] ?? 0,
-            room_id: $data['room_id'] ?? null,
-            room_name: $data['room_name'] ?? null,
-            message: $data['message'] ?? null,
             date_created: $data['date_created'] ?? null,
-            date_read: $data['date_read'] ?? null,
-            sender_type: $data['sender_type'] ?? null,
-            sender: $data['sender'] ?? null,
-            product: $data['product'] ?? null,
-            order: $data['order'] ?? null,
+            client_full_name: $data['client_full_name'] ?? null,
+            phone: $data['phone'] ?? null,
+            message: $data['message'] ?? null,
+            subject: $data['subject'] ?? null,
             status: $data['status'] ?? null,
+            product_id: $data['product_id'] ?? null,
         );
     }
 
@@ -70,16 +61,13 @@ class MessageDto
     {
         return [
             'id' => $this->id,
-            'room_id' => $this->room_id,
-            'room_name' => $this->room_name,
-            'message' => $this->message,
             'date_created' => $this->date_created,
-            'date_read' => $this->date_read,
-            'sender_type' => $this->sender_type,
-            'sender' => $this->sender,
-            'product' => $this->product,
-            'order' => $this->order,
+            'client_full_name' => $this->client_full_name,
+            'phone' => $this->phone,
+            'message' => $this->message,
+            'subject' => $this->subject,
             'status' => $this->status,
+            'product_id' => $this->product_id,
         ];
     }
 }
