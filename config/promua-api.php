@@ -14,7 +14,7 @@ return [
 
     'api_token' => env('PROMUA_API_TOKEN', ''),
 
-    'base_url' => env('PROMUA_BASE_URL', 'https://my.trunk.uaprom/api/v1'),
+    'base_url' => env('PROMUA_BASE_URL', 'https://my.prom.ua/api/v1'),
 
     'timeout' => env('PROMUA_TIMEOUT', 30),
 
