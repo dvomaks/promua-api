@@ -1,8 +1,7 @@
 <?php
-
+ 
 namespace Dvomaks\PromuaApi;
 
-use Dvomaks\PromuaApi\Commands\PromuaApiCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -19,7 +18,6 @@ class PromuaApiServiceProvider extends PackageServiceProvider
             ->name('promua-api')
             ->hasConfigFile()
             ->hasViews()
-            ->hasMigration('create_promua_api_table')
-            ->hasCommand(PromuaApiCommand::class);
+            ->hasMigration('create_promua_api_table');
     }
 }
