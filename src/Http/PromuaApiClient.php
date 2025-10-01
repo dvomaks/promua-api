@@ -4,8 +4,8 @@ namespace Dvomaks\PromuaApi\Http;
 
 use Dvomaks\PromuaApi\Exceptions\PromuaApiException;
 use Illuminate\Http\Client\PendingRequest;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Http;
 
 class PromuaApiClient
 {
@@ -14,14 +14,14 @@ class PromuaApiClient
     public function __construct()
     {
         $this->client = Http::withHeaders([
-            'Authorization' => 'Bearer ' . Config::get('promua-api.api_token'),
+            'Authorization' => 'Bearer '.Config::get('promua-api.api_token'),
             'Accept' => 'application/json',
             'Content-Type' => 'application/json',
             'X-LANGUAGE' => Config::get('promua-api.language'),
         ])
-        ->withUserAgent('Dvomaks/PromuaApi')
-        ->timeout(Config::get('promua-api.timeout'))
-        ->baseUrl(Config::get('promua-api.base_url'));
+            ->withUserAgent('Dvomaks/PromuaApi')
+            ->timeout(Config::get('promua-api.timeout'))
+            ->baseUrl(Config::get('promua-api.base_url'));
     }
 
     public function getClient(): PendingRequest
@@ -59,9 +59,9 @@ class PromuaApiClient
 
     protected function handleResponse($response): array
     {
-        if (!$response->successful()) {
+        if (! $response->successful()) {
             throw new PromuaApiException(
-                'API request failed: ' . $response->body(),
+                'API request failed: '.$response->body(),
                 $response->status(),
                 null,
                 $response->json()

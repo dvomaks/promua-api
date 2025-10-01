@@ -1,8 +1,8 @@
 <?php
 
+use Dvomaks\PromuaApi\Dto\ClientDto;
 use Dvomaks\PromuaApi\Http\PromuaApiClient;
 use Dvomaks\PromuaApi\Services\ClientsService;
-use Dvomaks\PromuaApi\Dto\ClientDto;
 
 /**
  * @property PromuaApiClient $mockClient
@@ -28,18 +28,18 @@ test('getList returns array of ClientDto', function () {
                 'comment' => null,
                 'skype' => null,
                 'orders_count' => 0,
-                'total_payout' => '0'
-            ]
-        ]
+                'total_payout' => '0',
+            ],
+        ],
     ];
-    
+
     $this->mockClient
         ->shouldReceive('get')
         ->with('/clients/list', [])
         ->andReturn($mockResponse);
-    
+
     $result = $this->clientsService->getList();
-    
+
     expect($result)->toBeArray();
     expect($result[0])->toBeInstanceOf(ClientDto::class);
     expect($result[0]->id)->toBe(1);
@@ -50,7 +50,7 @@ test('getList with parameters returns array of ClientDto', function () {
     $limit = 10;
     $lastId = 100;
     $searchTerm = 'John';
-    
+
     $mockResponse = [
         'clients' => [
             [
@@ -61,11 +61,11 @@ test('getList with parameters returns array of ClientDto', function () {
                 'comment' => null,
                 'skype' => null,
                 'orders_count' => 0,
-                'total_payout' => '0'
-            ]
-        ]
+                'total_payout' => '0',
+            ],
+        ],
     ];
-    
+
     $this->mockClient
         ->shouldReceive('get')
         ->with('/clients/list', [
@@ -74,9 +74,9 @@ test('getList with parameters returns array of ClientDto', function () {
             'search_term' => $searchTerm,
         ])
         ->andReturn($mockResponse);
-    
+
     $result = $this->clientsService->getList($limit, $lastId, $searchTerm);
-    
+
     expect($result)->toBeArray();
     expect($result[0])->toBeInstanceOf(ClientDto::class);
     expect($result[0]->id)->toBe(2);
@@ -94,17 +94,17 @@ test('getById returns ClientDto', function () {
             'comment' => null,
             'skype' => null,
             'orders_count' => 0,
-            'total_payout' => '0'
-        ]
+            'total_payout' => '0',
+        ],
     ];
-    
+
     $this->mockClient
         ->shouldReceive('get')
         ->with("/clients/{$clientId}")
         ->andReturn($mockResponse);
-    
+
     $result = $this->clientsService->getById($clientId);
-    
+
     expect($result)->toBeInstanceOf(ClientDto::class);
     expect($result->id)->toBe($clientId);
     expect($result->client_full_name)->toBe('Jane Doe');

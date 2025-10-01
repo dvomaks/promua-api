@@ -2,9 +2,9 @@
 
 namespace Dvomaks\PromuaApi;
 
+use Dvomaks\PromuaApi\Commands\PromuaApiCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Dvomaks\PromuaApi\Commands\PromuaApiCommand;
 
 class PromuaApiServiceProvider extends PackageServiceProvider
 {

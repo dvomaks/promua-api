@@ -11,14 +11,14 @@ namespace Dvomaks\PromuaApi\Dto;
 class MessageDto
 {
     /**
-     * @param int $id Унікальний ідентифікатор повідомлення
-     * @param string|null $date_created Дата створення повідомлення в форматі ISO-8601
-     * @param string|null $client_full_name ПІБ клієнта
-     * @param string|null $phone Телефон клієнта
-     * @param string|null $message Текст повідомлення
-     * @param string|null $subject Тема повідомлення
-     * @param string|null $status Статус повідомлення (unread, read, deleted)
-     * @param int|null $product_id Унікальний ідентифікатор товара
+     * @param  int  $id  Унікальний ідентифікатор повідомлення
+     * @param  string|null  $date_created  Дата створення повідомлення в форматі ISO-8601
+     * @param  string|null  $client_full_name  ПІБ клієнта
+     * @param  string|null  $phone  Телефон клієнта
+     * @param  string|null  $message  Текст повідомлення
+     * @param  string|null  $subject  Тема повідомлення
+     * @param  string|null  $status  Статус повідомлення (unread, read, deleted)
+     * @param  int|null  $product_id  Унікальний ідентифікатор товара
      */
     public function __construct(
         public int $id,
@@ -29,14 +29,12 @@ class MessageDto
         public ?string $subject,
         public ?string $status,
         public ?int $product_id,
-    ) {
-    }
+    ) {}
 
     /**
      * Створює екземпляр MessageDto з масиву даних
      *
-     * @param array $data Масив даних для створення DTO
-     * @return self
+     * @param  array  $data  Масив даних для створення DTO
      */
     public static function fromArray(array $data): self
     {
@@ -54,8 +52,6 @@ class MessageDto
 
     /**
      * Перетворює екземпляр DTO в масив
-     *
-     * @return array
      */
     public function toArray(): array
     {

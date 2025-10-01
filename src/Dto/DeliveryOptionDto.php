@@ -11,11 +11,11 @@ namespace Dvomaks\PromuaApi\Dto;
 class DeliveryOptionDto
 {
     /**
-     * @param int $id Унікальний ідентифікатор опції доставки
-     * @param string $name Назва опції доставки
-     * @param string $comment Опис опції доставки
-     * @param bool $enabled Чи є опція доставки активна
-     * @param string $type Тип доставки
+     * @param  int  $id  Унікальний ідентифікатор опції доставки
+     * @param  string  $name  Назва опції доставки
+     * @param  string  $comment  Опис опції доставки
+     * @param  bool  $enabled  Чи є опція доставки активна
+     * @param  string  $type  Тип доставки
      */
     public function __construct(
         public int $id,
@@ -23,14 +23,12 @@ class DeliveryOptionDto
         public string $comment,
         public bool $enabled,
         public string $type,
-    ) {
-    }
+    ) {}
 
     /**
      * Створює екземпляр DeliveryOptionDto з масиву даних
      *
-     * @param array $data Масив даних для створення DTO
-     * @return self
+     * @param  array  $data  Масив даних для створення DTO
      */
     public static function fromArray(array $data): self
     {
@@ -45,8 +43,6 @@ class DeliveryOptionDto
 
     /**
      * Перетворює екземпляр DTO в масив
-     *
-     * @return array
      */
     public function toArray(): array
     {

@@ -1,8 +1,8 @@
 <?php
 
+use Dvomaks\PromuaApi\Dto\ProductDto;
 use Dvomaks\PromuaApi\Http\PromuaApiClient;
 use Dvomaks\PromuaApi\Services\ProductsService;
-use Dvomaks\PromuaApi\Dto\ProductDto;
 
 beforeEach(function () {
     $this->mockClient = Mockery::mock(PromuaApiClient::class);
@@ -20,18 +20,18 @@ test('getList returns array of ProductDto', function () {
                 'id' => 1,
                 'name' => 'Test Product',
                 'price' => 100.00,
-                'status' => 'on_display'
-            ]
-        ]
+                'status' => 'on_display',
+            ],
+        ],
     ];
-    
+
     $this->mockClient
         ->shouldReceive('get')
         ->with('/products/list', [])
         ->andReturn($mockResponse);
-    
+
     $result = $this->productsService->getList();
-    
+
     expect($result)->toBeArray();
     expect($result[0])->toBeInstanceOf(ProductDto::class);
     expect($result[0]->id)->toBe(1);
@@ -44,18 +44,18 @@ test('getList with parameters returns array of ProductDto', function () {
     $limit = 10;
     $lastId = 100;
     $groupId = 5;
-    
+
     $mockResponse = [
         'products' => [
             [
                 'id' => 2,
                 'name' => 'Test Product 2',
                 'price' => 200.00,
-                'status' => 'on_display'
-            ]
-        ]
+                'status' => 'on_display',
+            ],
+        ],
     ];
-    
+
     $this->mockClient
         ->shouldReceive('get')
         ->with('/products/list', [
@@ -66,9 +66,9 @@ test('getList with parameters returns array of ProductDto', function () {
             'group_id' => $groupId,
         ])
         ->andReturn($mockResponse);
-    
+
     $result = $this->productsService->getList($lastModifiedFrom, $lastModifiedTo, $limit, $lastId, $groupId);
-    
+
     expect($result)->toBeArray();
     expect($result[0])->toBeInstanceOf(ProductDto::class);
     expect($result[0]->id)->toBe(2);
@@ -81,16 +81,16 @@ test('getById returns ProductDto', function () {
         'id' => $productId,
         'name' => 'Test Product',
         'price' => 100.00,
-        'status' => 'on_display'
+        'status' => 'on_display',
     ];
-    
+
     $this->mockClient
         ->shouldReceive('get')
         ->with("/products/{$productId}")
         ->andReturn($mockResponse);
-    
+
     $result = $this->productsService->getById($productId);
-    
+
     expect($result)->toBeInstanceOf(ProductDto::class);
     expect($result->id)->toBe($productId);
     expect($result->name)->toBe('Test Product');
@@ -103,16 +103,16 @@ test('getByExternalId returns ProductDto', function () {
         'name' => 'Test Product',
         'external_id' => $externalId,
         'price' => 100.00,
-        'status' => 'on_display'
+        'status' => 'on_display',
     ];
-    
+
     $this->mockClient
         ->shouldReceive('get')
         ->with("/products/by_external_id/{$externalId}")
         ->andReturn($mockResponse);
-    
+
     $result = $this->productsService->getByExternalId($externalId);
-    
+
     expect($result)->toBeInstanceOf(ProductDto::class);
     expect($result->external_id)->toBe($externalId);
     expect($result->name)->toBe('Test Product');
@@ -123,16 +123,16 @@ test('edit returns ProductDto', function () {
         'id' => 1,
         'name' => 'Updated Product',
         'price' => 150.00,
-        'status' => 'on_display'
+        'status' => 'on_display',
     ];
-    
+
     $this->mockClient
         ->shouldReceive('post')
         ->with('/products/edit', $productData)
         ->andReturn($productData);
-    
+
     $result = $this->productsService->edit($productData);
-    
+
     expect($result)->toBeInstanceOf(ProductDto::class);
     expect($result->id)->toBe(1);
     expect($result->name)->toBe('Updated Product');
@@ -143,9 +143,9 @@ test('editByExternalId returns ProductDto', function () {
         'id' => 'EXT-123',
         'name' => 'Updated Product',
         'price' => 150.00,
-        'status' => 'on_display'
+        'status' => 'on_display',
     ];
-    
+
     // Відповідь API буде мати числовий ID, оскільки після обробки на сервері
     // зовнішній ID зберігається в іншому полі, а в полі id повертається внутрішній числовий ID
     $responseData = [
@@ -153,16 +153,16 @@ test('editByExternalId returns ProductDto', function () {
         'external_id' => 'EXT-123',
         'name' => 'Updated Product',
         'price' => 150.00,
-        'status' => 'on_display'
+        'status' => 'on_display',
     ];
-    
+
     $this->mockClient
         ->shouldReceive('post')
         ->with('/products/edit_by_external_id', $productData)
         ->andReturn($responseData);
-    
+
     $result = $this->productsService->editByExternalId($productData);
-    
+
     expect($result)->toBeInstanceOf(ProductDto::class);
     expect($result->id)->toBe(123);
     expect($result->external_id)->toBe('EXT-123');
@@ -176,21 +176,21 @@ test('importFromUrl returns array', function () {
         'force_update' => true,
         'only_available' => false,
         'mark_missing_product_as' => 'not_available',
-        'updated_fields' => ['price', 'presence']
+        'updated_fields' => ['price', 'presence'],
     ];
-    
+
     $mockResponse = [
         'status' => 'success',
-        'import_id' => 12345
+        'import_id' => 12345,
     ];
-    
+
     $this->mockClient
         ->shouldReceive('post')
         ->with('/products/import_url', $params)
         ->andReturn($mockResponse);
-    
+
     $result = $this->productsService->importFromUrl($url, true, false, 'not_available', ['price', 'presence']);
-    
+
     expect($result)->toBeArray();
     expect($result['status'])->toBe('success');
     expect($result['import_id'])->toBe(12345);
@@ -201,16 +201,16 @@ test('getImportStatus returns array', function () {
     $mockResponse = [
         'status' => 'completed',
         'processed_count' => 100,
-        'errors_count' => 0
+        'errors_count' => 0,
     ];
-    
+
     $this->mockClient
         ->shouldReceive('get')
         ->with("/products/import/status/{$importId}")
         ->andReturn($mockResponse);
-    
+
     $result = $this->productsService->getImportStatus($importId);
-    
+
     expect($result)->toBeArray();
     expect($result['status'])->toBe('completed');
     expect($result['processed_count'])->toBe(100);
@@ -221,16 +221,16 @@ test('getTranslation returns array', function () {
     $lang = 'uk';
     $mockResponse = [
         'name' => 'Тестовий продукт',
-        'description' => 'Опис тестового продукту'
+        'description' => 'Опис тестового продукту',
     ];
-    
+
     $this->mockClient
         ->shouldReceive('get')
         ->with("/products/translation/{$productId}", ['lang' => $lang])
         ->andReturn($mockResponse);
-    
+
     $result = $this->productsService->getTranslation($productId, $lang);
-    
+
     expect($result)->toBeArray();
     expect($result['name'])->toBe('Тестовий продукт');
 });
@@ -240,20 +240,20 @@ test('updateTranslation returns array', function () {
         'id' => 'PROD-123',
         'name' => 'Updated Name',
         'description' => 'Updated Description',
-        'lang' => 'uk'
+        'lang' => 'uk',
     ];
-    
+
     $mockResponse = [
-        'status' => 'success'
+        'status' => 'success',
     ];
-    
+
     $this->mockClient
         ->shouldReceive('put')
         ->with('/products/translation', $translationData)
         ->andReturn($mockResponse);
-    
+
     $result = $this->productsService->updateTranslation($translationData);
-    
+
     expect($result)->toBeArray();
     expect($result['status'])->toBe('success');
 });

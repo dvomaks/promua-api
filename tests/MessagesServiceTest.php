@@ -1,8 +1,8 @@
 <?php
 
+use Dvomaks\PromuaApi\Dto\MessageDto;
 use Dvomaks\PromuaApi\Http\PromuaApiClient;
 use Dvomaks\PromuaApi\Services\MessagesService;
-use Dvomaks\PromuaApi\Dto\MessageDto;
 
 beforeEach(function () {
     $this->mockClient = Mockery::mock(PromuaApiClient::class);
@@ -24,18 +24,18 @@ test('getList returns array of MessageDto', function () {
                 'message' => 'Hello, I have a question',
                 'subject' => 'Question',
                 'status' => 'unread',
-                'product_id' => 123
-            ]
-        ]
+                'product_id' => 123,
+            ],
+        ],
     ];
-    
+
     $this->mockClient
         ->shouldReceive('get')
         ->with('/messages/list', [])
         ->andReturn($mockResponse);
-    
+
     $result = $this->messagesService->getList();
-    
+
     expect($result)->toBeArray();
     expect($result[0])->toBeInstanceOf(MessageDto::class);
     expect($result[0]->id)->toBe(1);
@@ -48,7 +48,7 @@ test('getList with parameters returns array of MessageDto', function () {
     $dateTo = '2023-12-31T23:59:59';
     $limit = 10;
     $lastId = 100;
-    
+
     $mockResponse = [
         'messages' => [
             [
@@ -59,11 +59,11 @@ test('getList with parameters returns array of MessageDto', function () {
                 'message' => 'Another message',
                 'subject' => 'Info',
                 'status' => 'read',
-                'product_id' => 456
-            ]
-        ]
+                'product_id' => 456,
+            ],
+        ],
     ];
-    
+
     $this->mockClient
         ->shouldReceive('get')
         ->with('/messages/list', [
@@ -74,9 +74,9 @@ test('getList with parameters returns array of MessageDto', function () {
             'last_id' => $lastId,
         ])
         ->andReturn($mockResponse);
-    
+
     $result = $this->messagesService->getList($status, $dateFrom, $dateTo, $limit, $lastId);
-    
+
     expect($result)->toBeArray();
     expect($result[0])->toBeInstanceOf(MessageDto::class);
     expect($result[0]->id)->toBe(2);
@@ -95,17 +95,17 @@ test('getById returns MessageDto', function () {
             'message' => 'Hello, I have a question',
             'subject' => 'Question',
             'status' => 'unread',
-            'product_id' => 123
-        ]
+            'product_id' => 123,
+        ],
     ];
-    
+
     $this->mockClient
         ->shouldReceive('get')
         ->with("/messages/{$messageId}")
         ->andReturn($mockResponse);
-    
+
     $result = $this->messagesService->getById($messageId);
-    
+
     expect($result)->toBeInstanceOf(MessageDto::class);
     expect($result->id)->toBe($messageId);
     expect($result->client_full_name)->toBe('John Doe');
@@ -116,19 +116,19 @@ test('reply returns processed ids', function () {
     $messageId = 1;
     $replyMessage = 'Thank you for your message';
     $mockResponse = [
-        'processed_ids' => [$messageId]
+        'processed_ids' => [$messageId],
     ];
-    
+
     $this->mockClient
         ->shouldReceive('post')
         ->with('/messages/reply', [
             'id' => $messageId,
-            'message' => $replyMessage
+            'message' => $replyMessage,
         ])
         ->andReturn($mockResponse);
-    
+
     $result = $this->messagesService->reply($messageId, $replyMessage);
-    
+
     expect($result)->toBeArray();
     expect($result['processed_ids'])->toBeArray();
     expect($result['processed_ids'][0])->toBe($messageId);
@@ -138,19 +138,19 @@ test('setStatus returns processed ids', function () {
     $status = 'read';
     $ids = [1, 2, 3];
     $mockResponse = [
-        'processed_ids' => $ids
+        'processed_ids' => $ids,
     ];
-    
+
     $this->mockClient
         ->shouldReceive('post')
         ->with('/messages/set_status', [
             'status' => $status,
-            'ids' => $ids
+            'ids' => $ids,
         ])
         ->andReturn($mockResponse);
-    
+
     $result = $this->messagesService->setStatus($status, $ids);
-    
+
     expect($result)->toBeArray();
     expect($result['processed_ids'])->toBeArray();
     expect($result['processed_ids'])->toBe($ids);

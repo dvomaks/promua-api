@@ -11,36 +11,50 @@ namespace Dvomaks\PromuaApi\Dto;
 class ChatMessageDto
 {
     /**
-     * @param int $id Унікальний ідентифікатор повідомлення
-     * @param string $room_id Унікальний ідентифікатор кімнати чату
-     * @param string $room_ident Ідент кімнати чату в форматі {user_id}_{company_id}_buyer
-     * @param string|null $body Вміст повідомлення
-     * @param string $date_sent Дата відправки повідомлення (UTC+0)
-     * @param string $type Тип повідомлення (message, context, notification, system)
-     * @param string $status Статус повідомлення (new, read)
-     * @param int|null $context_item_id Ідентифікатор сутності контексту (замовлення або товару)
-     * @param string|null $context_item_image_url Посилання на зображення контексту файлу
-     * @param string|null $context_item_type Тип контексту повідомлення (null, product, order, file)
-     * @param string $user_name Ім'я користувача відправника повідомлення
-     * @param string $user_ident Ідентифікатор користувача відправника повідомлення
-     * @param string|null $user_phone Номер телефону користувача відправника повідомлення
-     * @param int|null $buyer_client_id Ідентифікатор клієнта компанії з яким створено чат
-     * @param bool $is_sender true якщо відправником повідомлення є компанія або менеджер компанії
+     * @param  int  $id  Унікальний ідентифікатор повідомлення
+     * @param  string  $room_id  Унікальний ідентифікатор кімнати чату
+     * @param  string  $room_ident  Ідент кімнати чату в форматі {user_id}_{company_id}_buyer
+     * @param  string|null  $body  Вміст повідомлення
+     * @param  string  $date_sent  Дата відправки повідомлення (UTC+0)
+     * @param  string  $type  Тип повідомлення (message, context, notification, system)
+     * @param  string  $status  Статус повідомлення (new, read)
+     * @param  int|null  $context_item_id  Ідентифікатор сутності контексту (замовлення або товару)
+     * @param  string|null  $context_item_image_url  Посилання на зображення контексту файлу
+     * @param  string|null  $context_item_type  Тип контексту повідомлення (null, product, order, file)
+     * @param  string  $user_name  Ім'я користувача відправника повідомлення
+     * @param  string  $user_ident  Ідентифікатор користувача відправника повідомлення
+     * @param  string|null  $user_phone  Номер телефону користувача відправника повідомлення
+     * @param  int|null  $buyer_client_id  Ідентифікатор клієнта компанії з яким створено чат
+     * @param  bool  $is_sender  true якщо відправником повідомлення є компанія або менеджер компанії
      */
     public int $id;
+
     public string $room_id;
+
     public string $room_ident;
+
     public ?string $body;
+
     public string $date_sent;
+
     public string $type;
+
     public string $status;
+
     public ?int $context_item_id;
+
     public ?string $context_item_image_url;
+
     public ?string $context_item_type;
+
     public string $user_name;
+
     public string $user_ident;
+
     public ?string $user_phone;
+
     public ?int $buyer_client_id;
+
     public bool $is_sender;
 
     public function __construct(
@@ -80,8 +94,7 @@ class ChatMessageDto
     /**
      * Створює екземпляр ChatMessageDto з масиву даних
      *
-     * @param array $data Масив даних для створення DTO
-     * @return self
+     * @param  array  $data  Масив даних для створення DTO
      */
     public static function fromArray(array $data): self
     {
@@ -106,8 +119,6 @@ class ChatMessageDto
 
     /**
      * Перетворює екземпляр DTO в масив
-     *
-     * @return array
      */
     public function toArray(): array
     {

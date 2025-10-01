@@ -15,7 +15,7 @@ class PaymentService
     public function getList(array $params = []): array
     {
         $response = $this->client->get('/payment_options/list', $params);
-        
+
         $paymentOptions = [];
         foreach ($response['payment_options'] as $item) {
             $paymentOptions[] = PaymentOptionDto::fromArray($item);

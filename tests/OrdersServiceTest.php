@@ -1,8 +1,8 @@
 <?php
 
-use Dvomaks\PromuaApi\Services\OrdersService;
-use Dvomaks\PromuaApi\Http\PromuaApiClient;
 use Dvomaks\PromuaApi\Dto\OrderDto;
+use Dvomaks\PromuaApi\Http\PromuaApiClient;
+use Dvomaks\PromuaApi\Services\OrdersService;
 use Mockery;
 
 /**
@@ -24,8 +24,8 @@ it('can get order list', function () {
                     'client_last_name' => 'Doe',
                     'status' => 'new',
                     'price' => '100.00',
-                ]
-            ]
+                ],
+            ],
         ]);
 
     $service = new OrdersService($mockClient);

@@ -2,6 +2,7 @@
 
 namespace Dvomaks\PromuaApi;
 
+use Dvomaks\PromuaApi\Http\PromuaApiClient;
 use Dvomaks\PromuaApi\Services\ChatService;
 use Dvomaks\PromuaApi\Services\ClientsService;
 use Dvomaks\PromuaApi\Services\DeliveryService;
@@ -10,14 +11,12 @@ use Dvomaks\PromuaApi\Services\MessagesService;
 use Dvomaks\PromuaApi\Services\OrdersService;
 use Dvomaks\PromuaApi\Services\PaymentService;
 use Dvomaks\PromuaApi\Services\ProductsService;
-use Dvomaks\PromuaApi\Http\PromuaApiClient;
 
 class PromuaApi
 {
     public function __construct(
         protected PromuaApiClient $client
-    ) {
-    }
+    ) {}
 
     public function chat(): ChatService
     {

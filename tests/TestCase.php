@@ -2,9 +2,9 @@
 
 namespace Dvomaks\PromuaApi\Tests;
 
+use Dvomaks\PromuaApi\PromuaApiServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Dvomaks\PromuaApi\PromuaApiServiceProvider;
 
 class TestCase extends Orchestra
 {

@@ -11,13 +11,13 @@ namespace Dvomaks\PromuaApi\Dto;
 class GroupDto
 {
     /**
-     * @param int $id Унікальний ідентифікатор групи
-     * @param string|null $name Назва групи
-     * @param array|null $name_multilang Переклади назви групи
-     * @param string|null $description Опис групи
-     * @param array|null $description_multilang Переклади опису групи
-     * @param string|null $image URL-адреса зображення групи
-     * @param int|null $parent_group_id Ідентифікатор батьківської групи
+     * @param  int  $id  Унікальний ідентифікатор групи
+     * @param  string|null  $name  Назва групи
+     * @param  array|null  $name_multilang  Переклади назви групи
+     * @param  string|null  $description  Опис групи
+     * @param  array|null  $description_multilang  Переклади опису групи
+     * @param  string|null  $image  URL-адреса зображення групи
+     * @param  int|null  $parent_group_id  Ідентифікатор батьківської групи
      */
     public function __construct(
         public int $id,
@@ -27,14 +27,12 @@ class GroupDto
         public ?array $description_multilang,
         public ?string $image,
         public ?int $parent_group_id,
-    ) {
-    }
+    ) {}
 
     /**
      * Створює екземпляр GroupDto з масиву даних
      *
-     * @param array $data Масив даних для створення DTO
-     * @return self
+     * @param  array  $data  Масив даних для створення DTO
      */
     public static function fromArray(array $data): self
     {
@@ -51,8 +49,6 @@ class GroupDto
 
     /**
      * Перетворює екземпляр DTO в масив
-     *
-     * @return array
      */
     public function toArray(): array
     {

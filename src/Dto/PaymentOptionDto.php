@@ -5,7 +5,9 @@ namespace Dvomaks\PromuaApi\Dto;
 class PaymentOptionDto
 {
     public int $id;
+
     public string $name;
+
     public string $description;
 
     public function __construct(int $id, string $name, string $description)

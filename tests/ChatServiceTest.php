@@ -164,7 +164,7 @@ test('sendMessage returns message ID', function () {
         'body' => 'hello',
         'project' => 'promua',
     ];
-    
+
     $mockResponse = [
         'status' => 'ok',
         'data' => [
@@ -189,7 +189,7 @@ test('markMessageRead returns success status', function () {
         'message_id' => 12321312,
         'room_id' => 'room-uuid-1',
     ];
-    
+
     $mockResponse = [
         'status' => 'ok',
     ];

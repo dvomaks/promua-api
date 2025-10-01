@@ -11,14 +11,14 @@ namespace Dvomaks\PromuaApi\Dto;
 class ClientDto
 {
     /**
-     * @param int $id Унікальний ідентифікатор клієнта
-     * @param string|null $client_full_name ПІБ клієнта
-     * @param array|null $phones Список телефонів клієнта
-     * @param array|null $emails Список email-ів клієнта
-     * @param string|null $comment Примітки про клієнта
-     * @param string|null $skype Skype клієнта
-     * @param int|null $orders_count Кількість замовлень клієнта
-     * @param string|null $total_payout Сума всіх замовлень клієнта
+     * @param  int  $id  Унікальний ідентифікатор клієнта
+     * @param  string|null  $client_full_name  ПІБ клієнта
+     * @param  array|null  $phones  Список телефонів клієнта
+     * @param  array|null  $emails  Список email-ів клієнта
+     * @param  string|null  $comment  Примітки про клієнта
+     * @param  string|null  $skype  Skype клієнта
+     * @param  int|null  $orders_count  Кількість замовлень клієнта
+     * @param  string|null  $total_payout  Сума всіх замовлень клієнта
      */
     public function __construct(
         public int $id,
@@ -29,14 +29,12 @@ class ClientDto
         public ?string $skype,
         public ?int $orders_count,
         public ?string $total_payout,
-    ) {
-    }
+    ) {}
 
     /**
      * Створює екземпляр ClientDto з масиву даних
      *
-     * @param array $data Масив даних для створення DTO
-     * @return self
+     * @param  array  $data  Масив даних для створення DTO
      */
     public static function fromArray(array $data): self
     {
@@ -54,8 +52,6 @@ class ClientDto
 
     /**
      * Перетворює екземпляр DTO в масив
-     *
-     * @return array
      */
     public function toArray(): array
     {

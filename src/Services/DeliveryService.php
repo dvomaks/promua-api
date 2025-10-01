@@ -15,7 +15,7 @@ class DeliveryService
     public function getList(array $params = []): array
     {
         $response = $this->client->get('/delivery_options/list', $params);
-        
+
         $deliveryOptions = [];
         foreach ($response['delivery_options'] as $item) {
             $deliveryOptions[] = DeliveryOptionDto::fromArray($item);

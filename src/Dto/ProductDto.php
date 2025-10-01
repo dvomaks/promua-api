@@ -11,33 +11,33 @@ namespace Dvomaks\PromuaApi\Dto;
 class ProductDto
 {
     /**
-     * @param int $id Унікальний ідентифікатор продукту
-     * @param string|null $external_id Унікальний (зовнішньої системи) ідентифікатор продукту
-     * @param string $name Назва продукту
-     * @param array|null $name_multilang Багатомовна назва продукту
-     * @param string|null $sku Артикул товару
-     * @param string|null $keywords Ключові слова товару
-     * @param string|null $description Опис товару
-     * @param array|null $description_multilang Багатомовний опис товару
-     * @param string $selling_type Тип товару (retail, wholesale, universal, service)
-     * @param string $presence Наявність товару (available, not_available, order, service)
-     * @param bool|null $in_stock Статус «В наявності»
-     * @param array|null $regions Де знаходиться товар
-     * @param float|null $price Ціна товару
-     * @param float|null $minimum_order_quantity Мінімальна кількість товарів в замовленні
-     * @param array|null $discount Знижка
-     * @param string|null $currency Валюта товару
-     * @param array|null $group Група товару
-     * @param array|null $category Категорія товару
-     * @param array|null $prices Сітка гуртових цін
-     * @param string|null $main_image Посилання на головне зображення товару
-     * @param array|null $images Додаткові зображення товару
-     * @param string|null $status Статус товару (on_display, draft, deleted, not_on_display, editing_required, approval_pending, deleted_by_moderator)
-     * @param int|null $quantity_in_stock Залишок продукту на складі
-     * @param string|null $measure_unit Одиниця вимірювання
-     * @param bool|null $is_variation Чи є товар різновидом
-     * @param int|null $variation_base_id Ідентифікатор базового товару
-     * @param int|null $variation_group_id Ідентифікатор групи різновидів
+     * @param  int  $id  Унікальний ідентифікатор продукту
+     * @param  string|null  $external_id  Унікальний (зовнішньої системи) ідентифікатор продукту
+     * @param  string  $name  Назва продукту
+     * @param  array|null  $name_multilang  Багатомовна назва продукту
+     * @param  string|null  $sku  Артикул товару
+     * @param  string|null  $keywords  Ключові слова товару
+     * @param  string|null  $description  Опис товару
+     * @param  array|null  $description_multilang  Багатомовний опис товару
+     * @param  string  $selling_type  Тип товару (retail, wholesale, universal, service)
+     * @param  string  $presence  Наявність товару (available, not_available, order, service)
+     * @param  bool|null  $in_stock  Статус «В наявності»
+     * @param  array|null  $regions  Де знаходиться товар
+     * @param  float|null  $price  Ціна товару
+     * @param  float|null  $minimum_order_quantity  Мінімальна кількість товарів в замовленні
+     * @param  array|null  $discount  Знижка
+     * @param  string|null  $currency  Валюта товару
+     * @param  array|null  $group  Група товару
+     * @param  array|null  $category  Категорія товару
+     * @param  array|null  $prices  Сітка гуртових цін
+     * @param  string|null  $main_image  Посилання на головне зображення товару
+     * @param  array|null  $images  Додаткові зображення товару
+     * @param  string|null  $status  Статус товару (on_display, draft, deleted, not_on_display, editing_required, approval_pending, deleted_by_moderator)
+     * @param  int|null  $quantity_in_stock  Залишок продукту на складі
+     * @param  string|null  $measure_unit  Одиниця вимірювання
+     * @param  bool|null  $is_variation  Чи є товар різновидом
+     * @param  int|null  $variation_base_id  Ідентифікатор базового товару
+     * @param  int|null  $variation_group_id  Ідентифікатор групи різновидів
      */
     public function __construct(
         public int $id,
@@ -67,14 +67,12 @@ class ProductDto
         public ?bool $is_variation,
         public ?int $variation_base_id,
         public ?int $variation_group_id,
-    ) {
-    }
+    ) {}
 
     /**
      * Створює екземпляр ProductDto з масиву даних
      *
-     * @param array $data Масив даних для створення DTO
-     * @return self
+     * @param  array  $data  Масив даних для створення DTO
      */
     public static function fromArray(array $data): self
     {
@@ -111,8 +109,6 @@ class ProductDto
 
     /**
      * Перетворює екземпляр DTO в масив
-     *
-     * @return array
      */
     public function toArray(): array
     {
