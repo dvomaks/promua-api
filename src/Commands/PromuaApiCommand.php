@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace Dvomaks\PromuaApi\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class PromuaApiCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'promua-api';
 
     public $description = 'My command';
 
