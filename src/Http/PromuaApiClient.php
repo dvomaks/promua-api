@@ -2,6 +2,7 @@
 
 namespace Dvomaks\PromuaApi\Http;
 
+use Dvomaks\PromuaApi\Exceptions\PromuaApiException;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Config;
@@ -59,7 +60,12 @@ class PromuaApiClient
     protected function handleResponse($response): array
     {
         if (!$response->successful()) {
-            throw new \Exception('API request failed: ' . $response->body(), $response->status());
+            throw new PromuaApiException(
+                'API request failed: ' . $response->body(),
+                $response->status(),
+                null,
+                $response->json()
+            );
         }
 
         return $response->json();
