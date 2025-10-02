@@ -1,6 +1,6 @@
 {
     "name": "dvomaks/promua-api",
-    "description": "This is my package promua-api",
+    "description": "Laravel package for PromUA API integration with consistent service methods",
     "keywords": [
         "dvomaks",
         "laravel",
