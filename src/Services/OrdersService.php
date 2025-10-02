@@ -37,7 +37,7 @@ readonly class OrdersService
      * @throws PromuaApiException
      * @throws ConnectionException
      */
-    public function getOrderList(
+    public function getList(
         ?string $status = null,
         ?string $dateFrom = null,
         ?string $dateTo = null,

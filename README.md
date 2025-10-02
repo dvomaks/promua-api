@@ -4,6 +4,17 @@
 [![Laravel Version](https://img.shields.io/badge/laravel-11.0+-red.svg)](https://laravel.com/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://opensource.org/licenses/MIT)
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/dvomaks/promua-api/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/dvomaks/promua-api/tree/main)
+[![Packagist Version](https://img.shields.io/packagist/v/dvomaks/promua-api.svg?style=flat&color=orange)](https://packagist.org/packages/dvomaks/promua-api)
+[![Total Downloads](https://img.shields.io/packagist/dt/dvomaks/promua-api.svg?style=flat&color=brightgreen)](https://packagist.org/packages/dvomaks/promua-api)
+[![Coverage Status](https://img.shields.io/codecov/c/github/dvomaks/promua-api/main.svg)](https://codecov.io/gh/dvomaks/promua-api)
+[![Static Analysis](https://img.shields.io/badge/PHPStan-level%205-blueviolet)](https://phpstan.org/)
+[![Docs](https://img.shields.io/badge/docs-uk-blue?style=flat&logo=read-the-docs)](https://my.prom.ua/api/v1/docs)
+[![PHP Types](https://img.shields.io/badge/types-strict-green?style=flat&logo=php)](https://www.php.net/manual/en/language.types.declarations.php)
+[![Last Commit](https://img.shields.io/github/last-commit/dvomaks/promua-api/main.svg?style=flat&color=yellow)](https://github.com/dvomaks/promua-api/commits/main)
+[![Tests](https://img.shields.io/badge/tests-passing-brightgreen?style=flat&logo=php)](https://github.com/dvomaks/promua-api/actions?query=workflow%3ATests)
+[![Code Style](https://img.shields.io/badge/code%20style-Pint-ff69b4?style=flat&logo=laravel)](https://laravel.com/docs/pint)
+
+Тоді блок бейджів на початку буде виглядати так:
 
 > Потужний Laravel пакет для інтеграції з PromUA API - провідною українською e-commerce платформою
 
@@ -147,11 +158,11 @@ return [
 use Dvomaks\PromuaApi\Facades\PromuaApi;
 
 // Через Facade
-$orders = PromuaApi::orders()->getOrderList();
+$orders = PromuaApi::orders()->getList();
 
 // Або безпосередньо
-$promuaApi = new \Dvomaks\PromuaApi\PromuaApi($httpClient);
-$orders = $promuaApi->orders()->getOrderList();
+$promuaApi = new \Dvomaks\PromuaApi($httpClient);
+$orders = $promuaApi->orders()->getList();
 ```
 
 ## 📚 Приклади коду
@@ -162,7 +173,7 @@ $orders = $promuaApi->orders()->getOrderList();
 use Dvomaks\PromuaApi\Facades\PromuaApi;
 
 // Отримання списку замовлень
-$orders = PromuaApi::orders()->getOrderList(
+$orders = PromuaApi::orders()->getList(
     status: 'pending',
     dateFrom: '2024-01-01',
     limit: 50
@@ -187,7 +198,7 @@ $result = PromuaApi::orders()->refund(12345, 299.99, 'Товар поверну�
 use Dvomaks\PromuaApi\Facades\PromuaApi;
 
 // Отримання списку товарів
-$products = PromuaApi::products()->getProductList(limit: 100);
+$products = PromuaApi::products()->getList(limit: 100);
 
 // Отримання товару за ID
 $product = PromuaApi::products()->getById(67890);
@@ -215,7 +226,7 @@ $result = PromuaApi::products()->importFromFile('/path/to/products.xml');
 use Dvomaks\PromuaApi\Facades\PromuaApi;
 
 // Отримання списку клієнтів
-$clients = PromuaApi::clients()->getClientList(limit: 200);
+$clients = PromuaApi::clients()->getList(limit: 200);
 
 // Отримання клієнта за ID
 $client = PromuaApi::clients()->getById(11223);
@@ -227,7 +238,7 @@ $client = PromuaApi::clients()->getById(11223);
 use Dvomaks\PromuaApi\Facades\PromuaApi;
 
 // Отримання списку повідомлень
-$messages = PromuaApi::messages()->getMessageList();
+$messages = PromuaApi::messages()->getList();
 
 // Відповідь на повідомлення
 $result = PromuaApi::messages()->reply(12345, 'Дякуємо за ваше запитання!');
@@ -263,7 +274,7 @@ $result = PromuaApi::chat()->markAsRead(12345);
 use Dvomaks\PromuaApi\Facades\PromuaApi;
 
 // Отримання списку груп
-$groups = PromuaApi::groups()->getGroupList();
+$groups = PromuaApi::groups()->getList();
 
 // Отримання перекладу групи
 $translation = PromuaApi::groups()->getTranslation(123, 'en');
@@ -283,7 +294,7 @@ $result = PromuaApi::groups()->updateTranslation(123, 'en', [
 
 | Сервіс | Методи | Опис |
 |--------|--------|------|
-| **Orders** | `getOrderList()` | Отримує список замовлень з фільтрацією за статусом, датою та лімітом |
+| **Orders** | `getList()` | Отримує список замовлень з фільтрацією за статусом, датою та лімітом |
 | | `getById(id)` | Отримує детальну інформацію про конкретне замовлення |
 | | `updateStatus(id, status)` | Оновлює статус замовлення (new, pending, sent, delivered тощо) |
 | | `attachReceipt(id, receiptId)` | Прикріплює квитанцію до замовлення |
@@ -339,7 +350,7 @@ class MyServiceTest extends TestCase
     /** @test */
     public function it_can_get_orders()
     {
-        $orders = PromuaApi::orders()->getOrderList();
+        $orders = PromuaApi::orders()->getList();
 
         $this->assertIsArray($orders);
     }

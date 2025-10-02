@@ -63,7 +63,6 @@ test('it does not log requests and responses when logging is disabled', function
     $expectation = $logManagerMock->allows('channel');
     $expectation->with('deprecations')->andReturn($deprecationChannelMock);
 
-
     // Замінюємо Log facade на мок LogManager
     Log::swap($logManagerMock);
 
@@ -78,16 +77,16 @@ test('it does not log requests and responses when logging is disabled', function
     // робимо spy
     Log::spy();
 
-// код, який може логувати...
+    // код, який може логувати...
 
     /** @var MockInterface&LoggerInterface $logMock */
     $logMock = Log::getFacadeRoot();
 
     $logMock->shouldNotHaveReceived('info', [
-        Mockery::on(fn($m) => str_starts_with($m, 'PromUA API Request: '))
+        Mockery::on(fn ($m) => str_starts_with($m, 'PromUA API Request: ')),
     ]);
 
     $logMock->shouldNotHaveReceived('info', [
-        Mockery::on(fn($m) => str_starts_with($m, 'PromUA API Response: '))
+        Mockery::on(fn ($m) => str_starts_with($m, 'PromUA API Response: ')),
     ]);
 });

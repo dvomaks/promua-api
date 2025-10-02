@@ -28,7 +28,7 @@ it('can get order list', function () {
         ]);
 
     $service = new OrdersService($mockClient);
-    $orders = $service->getOrderList(limit: 10);
+    $orders = $service->getList(limit: 10);
 
     expect($orders)
         ->toBeArray()
