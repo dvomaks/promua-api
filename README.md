@@ -14,8 +14,6 @@
 [![Tests](https://img.shields.io/badge/tests-passing-brightgreen?style=flat&logo=php)](https://github.com/dvomaks/promua-api/actions?query=workflow%3ATests)
 [![Code Style](https://img.shields.io/badge/code%20style-Pint-ff69b4?style=flat&logo=laravel)](https://laravel.com/docs/pint)
 
-Тоді блок бейджів на початку буде виглядати так:
-
 > Потужний Laravel пакет для інтеграції з PromUA API - провідною українською e-commerce платформою
 
 ## 📋 Зміст
@@ -413,20 +411,6 @@ parameters:
         - tests/
     bootstrapFiles:
         - vendor/autoload.php
-```
-
-#### Варіант 2: Без PHPStan
-
-Якщо PHPStan не встановлено, ви можете використовувати інші інструменти статичного аналізу:
-
-```bash
-# Встановлення та використання альтернативних інструментів
-composer require --dev squizlabs/php_codesniffer
-php vendor/bin/phpcs src/ --standard=PSR12
-
-# Або перевірити синтаксис PHP
-php -l src/
-php -l tests/
 ```
 
 ## 🤝 Внесок у розробку
