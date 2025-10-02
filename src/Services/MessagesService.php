@@ -3,23 +3,35 @@
 namespace Dvomaks\PromuaApi\Services;
 
 use Dvomaks\PromuaApi\Dto\MessageDto;
+use Dvomaks\PromuaApi\Exceptions\PromuaApiException;
 use Dvomaks\PromuaApi\Http\PromuaApiClient;
+use Illuminate\Http\Client\ConnectionException;
 
-class MessagesService
+/**
+ * MessagesService provides methods to interact with message functionality of the Promua API.
+ * It allows retrieving messages list, getting a specific message by ID, replying to messages, and setting message statuses.
+ */
+readonly class MessagesService
 {
-    public function __construct(
-        private PromuaApiClient $client
-    ) {}
+    /**
+     * MessagesService constructor.
+     *
+     * @param  PromuaApiClient  $client  The API client used to make requests to the Promua API
+     */
+    public function __construct(private PromuaApiClient $client) {}
 
     /**
-     * Отримує список повідомлень
+     * Get a list of messages
      *
-     * @param  string|null  $status  Статус повідомлення (unread, read, deleted)
-     * @param  string|null  $dateFrom  Дата початку у форматі ISO-8601
-     * @param  string|null  $dateTo  Дата завершення у форматі ISO-8601
-     * @param  int|null  $limit  Обмеження кількості повідомлень
-     * @param  int|null  $lastId  Обмежити вибірку повідомлень з ідентифікаторами не вище вказаного
-     * @return MessageDto[]
+     * @param  string|null  $status  Message status (unread, read, deleted)
+     * @param  string|null  $dateFrom  Start date in ISO-8601 format
+     * @param  string|null  $dateTo  End date in ISO-8601 format
+     * @param  int|null  $limit  Limit the number of messages
+     * @param  int|null  $lastId  Limit the selection of messages with identifiers not higher than the specified one
+     * @return MessageDto[] Array of message data transfer objects
+     *
+     * @throws PromuaApiException
+     * @throws ConnectionException
      */
     public function getList(
         ?string $status = null,
@@ -47,23 +59,30 @@ class MessagesService
     }
 
     /**
-     * Отримує повідомлення за ідентифікатором
+     * Get a message by ID
      *
-     * @param  int  $id  Ідентифікатор повідомлення
+     * @param  int  $id  Message identifier
+     * @return MessageDto The message data transfer object
+     *
+     * @throws ConnectionException
+     * @throws PromuaApiException
      */
     public function getById(int $id): MessageDto
     {
-        $response = $this->client->get("/messages/{$id}");
+        $response = $this->client->get("/messages/$id");
 
         return MessageDto::fromArray($response['message']);
     }
 
     /**
-     * Відповідає на повідомлення
+     * Reply to a message
      *
-     * @param  int  $id  Ідентифікатор повідомлення
-     * @param  string  $message  Текст відповіді
-     * @return array Масив з ідентифікатором обробленого повідомлення
+     * @param  int  $id  Message identifier
+     * @param  string  $message  Reply text
+     * @return array Array with the identifier of the processed message
+     *
+     * @throws ConnectionException
+     * @throws PromuaApiException
      */
     public function reply(int $id, string $message): array
     {
@@ -76,11 +95,14 @@ class MessagesService
     }
 
     /**
-     * Змінює статус повідомлень
+     * Change message statuses
      *
-     * @param  string  $status  Статус повідомлення (unread, read, deleted)
-     * @param  array  $ids  Масив ідентифікаторів повідомлень
-     * @return array Масив з ідентифікаторами оброблених повідомлень
+     * @param  string  $status  Message status (unread, read, deleted)
+     * @param  array  $ids  Array of message identifiers
+     * @return array Array with identifiers of processed messages
+     *
+     * @throws ConnectionException
+     * @throws PromuaApiException
      */
     public function setStatus(string $status, array $ids): array
     {

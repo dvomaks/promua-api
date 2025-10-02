@@ -3,23 +3,39 @@
 namespace Dvomaks\PromuaApi\Services;
 
 use Dvomaks\PromuaApi\Dto\OrderDto;
+use Dvomaks\PromuaApi\Exceptions\PromuaApiException;
 use Dvomaks\PromuaApi\Http\PromuaApiClient;
+use Illuminate\Http\Client\ConnectionException;
 
-class OrdersService
+/**
+ * OrdersService provides methods to interact with order functionality of the Promua API.
+ * It allows retrieving orders list, getting a specific order by ID, updating order status,
+ * attaching receipts to orders, and processing order refunds.
+ */
+readonly class OrdersService
 {
-    public function __construct(
-        protected PromuaApiClient $client
-    ) {}
+    /**
+     * OrdersService constructor.
+     *
+     * @param  PromuaApiClient  $client  The API client used to make requests to the Promua API
+     */
+    public function __construct(private PromuaApiClient $client) {}
 
     /**
-     * Отримує список замовлень
+     * Get a list of orders
      *
-     * @param  string|null  $lastModifiedFrom  Request for items modified after the specified date. Example - `2015-04-28T12:50:34`.
-     * @param  string|null  $lastModifiedTo  Request for items modified before the specified date. Example - `2015-04-28T12:50:34`.
-     * @param  int|null  $limit  Limiting the number of items in the response.
-     * @param  int|null  $lastId  Limit the selection of orders with identifiers no higher than the specified one.
-     * @param  string|null  $status  Filter orders by status.
-     * @return array Масив OrderDto
+     * @param  string|null  $status  Filter orders by status
+     * @param  string|null  $dateFrom  Request for items created after the specified date. Example - `2015-04-28T12:50:34`
+     * @param  string|null  $dateTo  Request for items created before the specified date. Example - `2015-04-28T12:50:34`
+     * @param  string|null  $lastModifiedFrom  Request for items modified after the specified date. Example - `2015-04-28T12:50:34`
+     * @param  string|null  $lastModifiedTo  Request for items modified before the specified date. Example - `2015-04-28T12:50:34`
+     * @param  int|null  $limit  Limiting the number of items in the response
+     * @param  string|null  $sortDir  Sorting direction (asc/desc)
+     * @param  int|null  $lastId  Limit the selection of orders with identifiers no higher than the specified one
+     * @return OrderDto[] Array of OrderDto objects
+     *
+     * @throws PromuaApiException
+     * @throws ConnectionException
      */
     public function getOrderList(
         ?string $status = null,
@@ -55,23 +71,30 @@ class OrdersService
     }
 
     /**
-     * Отримує замовлення за ідентифікатором
+     * Get an order by ID
      *
-     * @param  int  $id  Ідентифікатор замовлення
+     * @param  int  $id  Order identifier
+     * @return OrderDto The order data transfer object
+     *
+     * @throws ConnectionException
+     * @throws PromuaApiException
      */
     public function getById(int $id): OrderDto
     {
-        $response = $this->client->get("/orders/{$id}");
+        $response = $this->client->get("/orders/$id");
 
         return OrderDto::fromArray($response);
     }
 
     /**
-     * Оновлює статус замовлення
+     * Update order status
      *
-     * @param  int  $id  Ідентифікатор замовлення
-     * @param  string  $status  Новий статус замовлення
-     * @return array Результат оновлення
+     * @param  int  $id  Order identifier
+     * @param  string  $status  New order status
+     * @return array Result of the update
+     *
+     * @throws ConnectionException
+     * @throws PromuaApiException
      */
     public function updateStatus(int $id, string $status): array
     {
@@ -84,11 +107,14 @@ class OrdersService
     }
 
     /**
-     * Прикріплює квитанцію до замовлення
+     * Attach a receipt to an order
      *
-     * @param  int  $id  Ідентифікатор замовлення
-     * @param  string  $receiptId  ID квитанції
-     * @return array Результат прикріплення
+     * @param  int  $id  Order identifier
+     * @param  string  $receiptId  Receipt ID
+     * @return array Result of the attachment
+     *
+     * @throws ConnectionException
+     * @throws PromuaApiException
      */
     public function attachReceipt(int $id, string $receiptId): array
     {
@@ -101,12 +127,15 @@ class OrdersService
     }
 
     /**
-     * Повертає замовлення
+     * Refund an order
      *
-     * @param  int  $id  Ідентифікатор замовлення
-     * @param  float  $amount  Сума повернення
-     * @param  string  $reason  Причина повернення
-     * @return array Результат повернення
+     * @param  int  $id  Order identifier
+     * @param  float  $amount  Refund amount
+     * @param  string  $reason  Reason for refund
+     * @return array Result of the refund
+     *
+     * @throws ConnectionException
+     * @throws PromuaApiException
      */
     public function refund(int $id, float $amount, string $reason): array
     {

@@ -31,3 +31,4 @@ testbench.yaml
 .env
 .env.testing
 phpunit.local.xml.dist
+/qodana.yaml

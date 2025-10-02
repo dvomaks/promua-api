@@ -2,6 +2,7 @@
 
 namespace Dvomaks\PromuaApi\Tests;
 
+use Dotenv\Dotenv;
 use Illuminate\Support\Facades\Config;
 
 class TestCaseIntegration extends TestCase
@@ -14,14 +15,14 @@ class TestCaseIntegration extends TestCase
         $this->checkApiToken();
     }
 
-    public function getEnvironmentSetUp($app)
+    public function getEnvironmentSetUp($app): void
     {
         // Викликаємо батьківський метод для налаштування базової конфігурації
         parent::getEnvironmentSetUp($app);
 
         // Завантажуємо .env.testing файл, якщо він існує
         if (file_exists(__DIR__.'/../.env.testing')) {
-            $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__.'/../', '.env.testing');
+            $dotenv = Dotenv::createImmutable(__DIR__.'/../', '.env.testing');
             $dotenv->safeLoad();
         }
 
@@ -31,7 +32,7 @@ class TestCaseIntegration extends TestCase
         config()->set('promua-api.language', env('PROMUA_LANGUAGE', 'uk'));
     }
 
-    protected function checkApiToken()
+    protected function checkApiToken(): void
     {
         if (! Config::get('promua-api.api_token')) {
             $this->markTestSkipped('PROMUA_API_TOKEN is not set for integration tests.');

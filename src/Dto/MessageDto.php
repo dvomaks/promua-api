@@ -18,7 +18,7 @@ class MessageDto
      * @param  string|null  $message  Текст повідомлення
      * @param  string|null  $subject  Тема повідомлення
      * @param  string|null  $status  Статус повідомлення (unread, read, deleted)
-     * @param  int|null  $product_id  Унікальний ідентифікатор товара
+     * @param  int|null  $product_id  Унікальний ідентифікатор товару
      */
     public function __construct(
         public int $id,

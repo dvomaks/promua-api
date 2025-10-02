@@ -3,23 +3,37 @@
 namespace Dvomaks\PromuaApi\Services;
 
 use Dvomaks\PromuaApi\Dto\ProductDto;
+use Dvomaks\PromuaApi\Exceptions\PromuaApiException;
 use Dvomaks\PromuaApi\Http\PromuaApiClient;
+use Exception;
+use Illuminate\Http\Client\ConnectionException;
 
-class ProductsService
+/**
+ * ProductsService provides methods to interact with product functionality of the Promua API.
+ * It allows retrieving products list, getting products by ID or external ID, editing products,
+ * importing products from file or URL, checking import status, and managing product translations.
+ */
+readonly class ProductsService
 {
-    public function __construct(
-        protected PromuaApiClient $client
-    ) {}
+    /**
+     * ProductsService constructor.
+     *
+     * @param  PromuaApiClient  $client  The API client used to make requests to the Promua API
+     */
+    public function __construct(private PromuaApiClient $client) {}
 
     /**
-     * Отримує список продуктів
+     * Get a list of products
      *
-     * @param  string|null  $lastModifiedFrom  Request for items modified after the specified date. Example - `2015-04-28T12:50:34`.
-     * @param  string|null  $lastModifiedTo  Request for items modified before the specified date. Example - `2015-04-28T12:50:34`.
-     * @param  int|null  $limit  Limiting the number of items in the response.
-     * @param  int|null  $lastId  Limit the selection of products with identifiers no higher than the specified one.
-     * @param  int|null  $groupId  Group ID.
-     * @return array Масив ProductDto
+     * @param  string|null  $lastModifiedFrom  Request for items modified after the specified date. Example - `2015-04-28T12:50:34`
+     * @param  string|null  $lastModifiedTo  Request for items modified before the specified date. Example - `2015-04-28T12:50:34`
+     * @param  int|null  $limit  Limiting the number of items in the response
+     * @param  int|null  $lastId  Limit the selection of products with identifiers no higher than the specified one
+     * @param  int|null  $groupId  Group ID
+     * @return ProductDto[] Array of ProductDto objects
+     *
+     * @throws PromuaApiException
+     * @throws ConnectionException
      */
     public function getList(
         ?string $lastModifiedFrom = null,
@@ -49,33 +63,45 @@ class ProductsService
     }
 
     /**
-     * Отримує продукт за ідентифікатором
+     * Get a product by ID
      *
-     * @param  int  $id  Ідентифікатор продукту
+     * @param  int  $id  Product identifier
+     * @return ProductDto The product data transfer object
+     *
+     * @throws ConnectionException
+     * @throws PromuaApiException
      */
     public function getById(int $id): ProductDto
     {
-        $response = $this->client->get("/products/{$id}");
+        $response = $this->client->get("/products/$id");
 
         return ProductDto::fromArray($response);
     }
 
     /**
-     * Отримує продукт за зовнішнім ідентифікатором
+     * Get a product by external ID
      *
-     * @param  string  $externalId  Зовнішній ідентифікатор продукту
+     * @param  string  $externalId  Product external identifier
+     * @return ProductDto The product data transfer object
+     *
+     * @throws ConnectionException
+     * @throws PromuaApiException
      */
     public function getByExternalId(string $externalId): ProductDto
     {
-        $response = $this->client->get("/products/by_external_id/{$externalId}");
+        $response = $this->client->get("/products/by_external_id/$externalId");
 
         return ProductDto::fromArray($response);
     }
 
     /**
-     * Редагує продукт
+     * Edit a product
      *
-     * @param  array  $data  Дані продукту
+     * @param  array  $data  Product data
+     * @return ProductDto The updated product data transfer object
+     *
+     * @throws ConnectionException
+     * @throws PromuaApiException
      */
     public function edit(array $data): ProductDto
     {
@@ -85,9 +111,13 @@ class ProductsService
     }
 
     /**
-     * Редагує продукт за зовнішнім ідентифікатором
+     * Edit a product by external ID
      *
-     * @param  array  $data  Дані продукту
+     * @param  array  $data  Product data
+     * @return ProductDto The updated product data transfer object
+     *
+     * @throws ConnectionException
+     * @throws PromuaApiException
      */
     public function editByExternalId(array $data): ProductDto
     {
@@ -97,27 +127,36 @@ class ProductsService
     }
 
     /**
-     * Імпортує продукти з файлу
+     * TODO
+     * Import products from a file
      *
-     * @param  string  $filePath  Шлях до файлу
-     * @param  array  $params  Додаткові параметри
-     * @return array Результат імпорту
+     * @param  string  $filePath  Path to the file
+     * @param  array  $params  Additional parameters
+     * @return array Import result
+     *
+     * @throws Exception
+     *
+     * @noinspection PhpUnused
+     * @noinspection PhpUnusedParameterInspection
      */
     public function importFromFile(string $filePath, array $params = []): array
     {
-        // TODO: Для імпорту файлів потрібно використовувати інший підхід, оскільки це multipart/form-data
-        throw new \Exception('Import from file not implemented yet');
+        // TODO: For file imports, a different approach is needed since this is multipart/form-data
+        throw new Exception('Import from file not implemented yet');
     }
 
     /**
-     * Імпортує продукти за посиланням
+     * Import products from a URL
      *
-     * @param  string  $url  Посилання на файл
-     * @param  bool|null  $forceUpdate  Примусове оновлення
-     * @param  bool|null  $onlyAvailable  Імпорт тільки товарів в наявності
-     * @param  string|null  $markMissingProductAs  Статус для відсутніх продуктів (none, not_available, not_on_display, deleted)
-     * @param  array|null  $updatedFields  Поля для оновлення
-     * @return array Результат імпорту
+     * @param  string  $url  URL to the file
+     * @param  bool|null  $forceUpdate  Force update
+     * @param  bool|null  $onlyAvailable  Import only available products
+     * @param  string|null  $markMissingProductAs  Status for missing products (none, not_available, not_on_display, deleted)
+     * @param  array|null  $updatedFields  Fields to update
+     * @return array Import result
+     *
+     * @throws ConnectionException
+     * @throws PromuaApiException
      */
     public function importFromUrl(
         string $url,
@@ -140,33 +179,42 @@ class ProductsService
     }
 
     /**
-     * Перевіряє статус імпорту
+     * Check import status
      *
-     * @param  int  $importId  ID процесу імпорту
-     * @return array Статус імпорту
+     * @param  int  $importId  Import process ID
+     * @return array Import status
+     *
+     * @throws ConnectionException
+     * @throws PromuaApiException
      */
     public function getImportStatus(int $importId): array
     {
-        return $this->client->get("/products/import/status/{$importId}");
+        return $this->client->get("/products/import/status/$importId");
     }
 
     /**
-     * Отримує переклад продукту
+     * Get product translation
      *
-     * @param  string  $productId  ID продукту
-     * @param  string  $lang  Мова перекладу
-     * @return array Переклад продукту
+     * @param  string  $productId  Product ID
+     * @param  string  $lang  Translation language
+     * @return array Product translation
+     *
+     * @throws ConnectionException
+     * @throws PromuaApiException
      */
     public function getTranslation(string $productId, string $lang): array
     {
-        return $this->client->get("/products/translation/{$productId}", ['lang' => $lang]);
+        return $this->client->get("/products/translation/$productId", ['lang' => $lang]);
     }
 
     /**
-     * Оновлює переклад продукту
+     * Update product translation
      *
-     * @param  array  $data  Дані перекладу
-     * @return array Результат оновлення
+     * @param  array  $data  Translation data
+     * @return array Update result
+     *
+     * @throws ConnectionException
+     * @throws PromuaApiException
      */
     public function updateTranslation(array $data): array
     {

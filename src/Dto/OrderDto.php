@@ -14,7 +14,7 @@ class OrderDto
      * @param  int  $id  Унікальний ідентифікатор замовлення
      * @param  string|null  $date_created  Дата створення замовлення в форматі ISO-8601
      * @param  string|null  $client_first_name  Ім'я клієнта
-     * @param  string|null  $client_second_name  По-батькові клієнта
+     * @param  string|null  $client_second_name  По батькові клієнта
      * @param  string|null  $client_last_name  Прізвище клієнта
      * @param  int|null  $client_id  Унікальний ідентифікатор клієнта
      * @param  string|null  $client_notes  Коментар, доданий користувачем
@@ -30,9 +30,9 @@ class OrderDto
      * @param  array|null  $payment_option  Опція оплати
      * @param  array|null  $payment_data  Дані оплати
      * @param  string|null  $status  Статус замовлення
-     * @param  string|null  $status_name  Назва статуса замовлення
+     * @param  string|null  $status_name  Назва статусу замовлення
      * @param  string|null  $source  Джерело замовлення
-     * @param  bool|null  $has_order_promo_free_delivery  Замовлення з безкоштовною доставкою
+     * @param  bool|null  $has_order_promo_free_delivery  Замовлення з безплатною доставкою
      * @param  array|null  $cpa_commission  Комісія CPA
      * @param  array|null  $utm  UTM параметри
      * @param  bool|null  $dont_call_customer_back  Клієнт просить не телефонувати
