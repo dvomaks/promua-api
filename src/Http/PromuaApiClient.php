@@ -28,12 +28,13 @@ class PromuaApiClient
 
         if ($loggingEnabled) {
             $this->client = $this->client->beforeSending(function ($request, $options) {
-                Log::info('PromUA API Request', [
+                $logData = [
                     'method' => $request->method(),
                     'url' => $request->url(),
                     'headers' => $request->headers(),
                     'body' => $request->body(),
-                ]);
+                ];
+                Log::info('PromUA API Request'.json_encode($logData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
             });
         }
     }
@@ -76,11 +77,12 @@ class PromuaApiClient
         $loggingEnabled = Config::get('promua-api.logging.enabled', false);
 
         if ($loggingEnabled) {
-            Log::info('PromUA API Response', [
+            $logData = [
                 'status' => $response->status(),
                 'headers' => $response->headers(),
-                'body' => $response->body(),
-            ]);
+                'body' => $response->json(),
+            ];
+            Log::info('PromUA API Response'.json_encode($logData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
         }
 
         if (! $response->successful()) {

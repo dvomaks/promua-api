@@ -30,3 +30,4 @@ testbench.yaml
 /coverage
 .env
 .env.testing
+phpunit.local.xml.dist
