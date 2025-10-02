@@ -107,12 +107,6 @@ composer require dvomaks/promua-api
 php artisan vendor:publish --provider="Dvomaks\PromuaApi\PromuaApiServiceProvider"
 ```
 
-### 4. Публікація міграцій (за потреби)
-
-```bash
-php artisan vendor:publish --provider="Dvomaks\PromuaApi\PromuaApiServiceProvider" --tag="migrations"
-```
-
 ## ⚙️ Налаштування
 
 ### 1. Змінні оточення

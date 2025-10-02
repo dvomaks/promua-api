@@ -16,8 +16,6 @@ class PromuaApiServiceProvider extends PackageServiceProvider
          */
         $package
             ->name('promua-api')
-            ->hasConfigFile()
-            ->hasViews()
-            ->hasMigration('create_promua_api_table');
+            ->hasConfigFile();
     }
 }
